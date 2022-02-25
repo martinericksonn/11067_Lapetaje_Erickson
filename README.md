@@ -1,4 +1,6 @@
-Lock Breaker
+# Lock Breaker
+
+App GIF preview
 
 ![output](app_demo.gif)
 
