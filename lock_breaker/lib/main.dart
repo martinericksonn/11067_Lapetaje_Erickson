@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Locker Breaker',
+      title: 'Lock Breaker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Locker Breaker'),
+      home: const MyHomePage(title: 'Lock Breaker'),
     );
   }
 }
