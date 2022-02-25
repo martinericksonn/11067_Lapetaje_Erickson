@@ -97,15 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(
-                height: 42,
-              ),
-              Icon(
-                _isUnlocked ? Icons.lock_open : Icons.lock_outline_rounded,
-                size: 48,
-              ),
-              SizedBox(
-                height: 50,
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Icon(
+                  _isUnlocked ? Icons.lock_open : Icons.lock_outline_rounded,
+                  size: 48,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
