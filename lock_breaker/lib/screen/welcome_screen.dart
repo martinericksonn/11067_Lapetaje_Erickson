@@ -42,7 +42,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextButton(
+                child: OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

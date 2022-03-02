@@ -34,7 +34,7 @@ class LockedDoor extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextButton(
+              child: OutlinedButton(
                 onPressed: () {},
                 child: Text("Examine Door"),
               ),
