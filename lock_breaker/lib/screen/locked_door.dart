@@ -26,7 +26,7 @@ class LockedDoor extends StatelessWidget {
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             Image(
-              image: AssetImage("assets/images/locked_door.png"),
+              image: AssetImage("assets/images/unlocked_door.png"),
               height: 150,
             ),
             SizedBox(

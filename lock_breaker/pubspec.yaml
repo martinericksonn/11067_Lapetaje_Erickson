@@ -61,6 +61,8 @@ flutter:
     - assets/images/locker.png
     - assets/images/welcome.png
     - assets/images/locked_door.png
+    - assets/images/unlocked_door.png
+    - assets/images/adventure.png
 
   #   - images/a_dot_ham.jpeg
 

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/safe_dial.dart';
+import 'package:flutter_application_1/screen/final_screen.dart';
 import 'package:flutter_application_1/screen/welcome_screen.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: WelcomeScreen()
+        home: FinalScreen()
         // const MyHomePage(title: 'Lock Breaker'),
         );
   }
