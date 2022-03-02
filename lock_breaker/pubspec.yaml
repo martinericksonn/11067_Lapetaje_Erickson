@@ -60,6 +60,7 @@ flutter:
   assets:
     - assets/images/locker.png
     - assets/images/welcome.png
+    - assets/images/locked_door.png
 
   #   - images/a_dot_ham.jpeg
 
