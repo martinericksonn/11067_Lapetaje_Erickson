@@ -63,6 +63,7 @@ flutter:
     - assets/images/locked_door.png
     - assets/images/unlocked_door.png
     - assets/images/adventure.png
+    - assets/images/bkg.png
 
   #   - images/a_dot_ham.jpeg
 
