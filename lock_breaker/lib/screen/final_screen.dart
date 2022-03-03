@@ -10,7 +10,9 @@ class FinalScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           child: const Text(
             "Reset",
             style: TextStyle(

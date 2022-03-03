@@ -120,7 +120,6 @@ class _SafeDialScreen extends State<SafeDialScreen> {
                 width: 140,
                 child: OutlinedButton(
                   onPressed: () {
-                    
                     Navigator.of(context).pop(_isUnlocked);
                   },
                   child: Container(

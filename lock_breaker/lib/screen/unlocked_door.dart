@@ -1,24 +1,26 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screen/safe_dial_screen.dart';
-import 'package:flutter_application_1/screen/unlocked_door.dart';
+import 'package:flutter_application_1/screen/final_screen.dart';
 
-class LockedDoor extends StatefulWidget {
-  const LockedDoor({Key? key}) : super(key: key);
-
-  @override
-  State<LockedDoor> createState() => _LockedDoorState();
-}
-
-class _LockedDoorState extends State<LockedDoor> {
-  String appBarText = "The door is locked";
-  String buttonText = "Examine Door";
-  bool isDoorUnlocked = false;
+class UnlockedDoor extends StatelessWidget {
+  const UnlockedDoor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text(
+      //     "The door is open",
+      //     style: TextStyle(
+      //       fontSize: 18,
+      //     ),
+      //   ),
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   foregroundColor: Colors.black,
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,16 +33,16 @@ class _LockedDoorState extends State<LockedDoor> {
                   // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     Text(
-                      "The boy want to go out, door is ",
+                      "The door is ",
                     ),
                     Text(
-                      isDoorUnlocked ? "unlocked." : "locked.",
+                      "open.",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 )),
             Image(
-              image: AssetImage("assets/images/locked_door.png"),
+              image: AssetImage("assets/images/unlocked_door.png"),
               height: 150,
             ),
             SizedBox(
@@ -49,13 +51,17 @@ class _LockedDoorState extends State<LockedDoor> {
             SizedBox(
               width: 140,
               child: OutlinedButton(
-                onPressed: () async {
-                  await goToSafeDial(context);
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => FinalScreen(),
+                    ),
+                  );
                 },
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-                  child: Text(isDoorUnlocked ? "Open Door" : "Examine Door"),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                  child: Text("Leave House"),
                 ),
               ),
             ),
@@ -67,7 +73,7 @@ class _LockedDoorState extends State<LockedDoor> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(12),
-                  child: Text('Back'),
+                  child: Text("Lock Door"),
                 ),
               ),
             ),
@@ -75,18 +81,5 @@ class _LockedDoorState extends State<LockedDoor> {
         ),
       ),
     );
-  }
-
-  Future<void> goToSafeDial(BuildContext context) async {
-    bool? isDoorOpen = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>
-            isDoorUnlocked ? UnlockedDoor() : SafeDialScreen(),
-      ),
-    );
-
-    setState(() {
-      (isDoorOpen ?? false) ? isDoorUnlocked = true : isDoorUnlocked = false;
-    });
   }
 }

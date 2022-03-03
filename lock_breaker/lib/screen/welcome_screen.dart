@@ -16,52 +16,53 @@ class WelcomeScreen extends StatelessWidget {
             image: AssetImage("assets/images/bkg.png"),
           ),
         ),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                Text(
-                  "Prologue 1",
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              Text(
+                "Prologue 1",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "The boy who left home.",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 12,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "The boy who left home.",
-                    style: TextStyle(
-                      fontSize: 12,
-                    ),
-                  ),
+              ),
+              Image(
+                image: AssetImage(
+                  'assets/images/welcome.png',
                 ),
-                Image(
-                  image: AssetImage(
-                    'assets/images/welcome.png',
-                  ),
-                  height: 150,
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => LockedDoor(),
-                        ),
-                      );
-                    },
+                height: 150,
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              SizedBox(
+                width: 140,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LockedDoor(),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
                     child: Text("Continue"),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),
