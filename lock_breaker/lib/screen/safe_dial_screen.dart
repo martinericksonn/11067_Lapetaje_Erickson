@@ -12,7 +12,7 @@ class SafeDialScreen extends StatefulWidget {
 }
 
 class _SafeDialScreen extends State<SafeDialScreen> {
-  final String _combination = "555";
+  final String _combination = "456";
 
   List<int> _values = [5, 5, 5];
   bool _isUnlocked = false;

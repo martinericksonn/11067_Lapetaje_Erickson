@@ -34,6 +34,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   numberpicker: ^2.1.1
+  adaptive_dialog: ^1.4.0
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,10 @@ flutter:
     - assets/images/unlocked_door.png
     - assets/images/adventure.png
     - assets/images/bkg.png
+    - assets/images/bkg1.png
+    - assets/images/bkg2.png
+    - assets/images/bkg3.png
+    - assets/images/bkg4.png
 
   #   - images/a_dot_ham.jpeg
 

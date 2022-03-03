@@ -19,59 +19,67 @@ class _LockedDoorState extends State<LockedDoor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    Text(
-                      "The boy want to go out, door is ",
-                    ),
-                    Text(
-                      isDoorUnlocked ? "unlocked." : "locked.",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )),
-            Image(
-              image: AssetImage("assets/images/locked_door.png"),
-              height: 150,
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            SizedBox(
-              width: 140,
-              child: OutlinedButton(
-                onPressed: () async {
-                  await goToSafeDial(context);
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
-                  child: Text(isDoorUnlocked ? "Open Door" : "Examine Door"),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.fitHeight,
+            image: AssetImage("assets/images/bkg2.png"),
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      Text(
+                        "The boy want to go out, door is ",
+                      ),
+                      Text(
+                        isDoorUnlocked ? "unlocked." : "locked.",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  )),
+              Image(
+                image: AssetImage("assets/images/locked_door.png"),
+                height: 150,
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              SizedBox(
+                width: 140,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    await goToSafeDial(context);
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+                    child: Text(isDoorUnlocked ? "Open Door" : "Examine Door"),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 140,
-              child: OutlinedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text('Back'),
+              SizedBox(
+                width: 140,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text('Back'),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

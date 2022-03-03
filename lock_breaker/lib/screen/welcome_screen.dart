@@ -13,7 +13,7 @@ class WelcomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             fit: BoxFit.fitHeight,
-            image: AssetImage("assets/images/bkg.png"),
+            image: AssetImage("assets/images/bkg1.png"),
           ),
         ),
         child: Center(
