@@ -1,5 +1,5 @@
-Door Combination Lock
+##Door Combination Lock
 
 App GIF preview
 
-![output](door_combination_lock.gif)
+![output](../door_combination_lock.gif)
