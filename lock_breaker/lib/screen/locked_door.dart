@@ -22,7 +22,7 @@ class _LockedDoorState extends State<LockedDoor> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            fit: BoxFit.fitHeight,
+            fit: BoxFit.fill,
             image: AssetImage("assets/images/bkg2.png"),
           ),
         ),
