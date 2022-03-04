@@ -34,8 +34,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   numberpicker: ^2.1.1
-  adaptive_dialog: ^1.4.0
-  flutter_launcher_icons: ^0.9.2
 
 dev_dependencies:
   flutter_test:
@@ -51,31 +49,16 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/logo.png"
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/locker.png
-    - assets/images/welcome.png
-    - assets/images/locked_door.png
-    - assets/images/unlocked_door.png
-    - assets/images/adventure.png
-    - assets/images/bkg.png
-    - assets/images/bkg1.png
-    - assets/images/bkg2.png
-    - assets/images/bkg3.png
-    - assets/images/bkg4.png
-
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
