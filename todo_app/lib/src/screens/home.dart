@@ -114,12 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 enabledBorder: const OutlineInputBorder(),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                // prefix: IconButton(
-                //   icon: const Icon(Icons.clear, color: Colors.black),
-                //   onPressed: () {
-                //     _fn.unfocus();
-                //   },
-                // ),
+                prefix: IconButton(
+                  icon: const Icon(Icons.clear, color: Colors.black),
+                  onPressed: () {
+                    _tc.text = '';
+                    _fn.unfocus();
+                  },
+                ),
                 suffix: IconButton(
                   icon: const Icon(Icons.done, color: Colors.black),
                   onPressed: () {
