@@ -28,18 +28,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'To do',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
+        title: Center(
+          child: Text(
+            'Task Manager',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.secondary),
           ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFFF9991),
+      backgroundColor: Theme.of(context).primaryColor,
       body: appBody(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text(
+          "Add Task",
+          style: TextStyle(letterSpacing: .5),
+        ),
+        icon: Icon(Icons.add_box_rounded),
+      ),
     );
   }
 
@@ -108,6 +118,11 @@ class _HomeScreenState extends State<HomeScreen> {
       shrinkWrap: true,
       itemCount: todos.length,
       itemBuilder: (context, index) => Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: Colors.black),
+        ),
         child: ListTile(
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
