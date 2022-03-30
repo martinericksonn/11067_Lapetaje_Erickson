@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/src/Classes/todo.dart';
@@ -15,63 +17,12 @@ class _HomeScreenState extends State<HomeScreen> {
       id: 1,
       details: 'Walk the goldfish',
     ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish',
-    ),
   ];
 
   final ScrollController _sc = ScrollController();
   final TextEditingController _tc = TextEditingController();
   final FocusNode _fn = FocusNode();
+  int? tempIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text(
           'To do',
-          style: TextStyle(fontSize: 28),
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      backgroundColor: const Color(0xFFD96262),
+      backgroundColor: const Color(0xFFFF9991),
       body: appBody(),
     );
   }
@@ -101,37 +55,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: listView(),
               ),
             ),
-            // ignore: prefer_const_constructors
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              controller: _tc,
-              focusNode: _fn,
-              maxLines: 2,
-              decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(),
-                enabledBorder: const OutlineInputBorder(),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                prefix: IconButton(
-                  icon: const Icon(Icons.clear, color: Colors.black),
-                  onPressed: () {
-                    _tc.text = '';
-                    _fn.unfocus();
-                  },
-                ),
-                suffix: IconButton(
-                  icon: const Icon(Icons.done, color: Colors.black),
-                  onPressed: () {
-                    addTodo(_tc.text);
-                    _tc.text = '';
-                    _fn.unfocus();
-                  },
-                ),
-              ),
-            )
+            textField()
           ],
+        ),
+      ),
+    );
+  }
+
+  TextFormField textField() {
+    return TextFormField(
+      controller: _tc,
+      focusNode: _fn,
+      maxLines: 2,
+      decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(),
+        enabledBorder: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        prefix: IconButton(
+          icon: const Icon(Icons.clear, color: Colors.black),
+          onPressed: () {
+            tempIndex = null;
+            _tc.text = '';
+            _fn.unfocus();
+          },
+        ),
+        suffix: IconButton(
+          icon: const Icon(Icons.done, color: Colors.black),
+          onPressed: () {
+            setState(() {
+              tempIndex == null
+                  ? addTodo(_tc.text)
+                  : todos[tempIndex ?? 0].details = _tc.text;
+            });
+            tempIndex = null;
+            _tc.text = '';
+            _fn.unfocus();
+          },
         ),
       ),
     );
@@ -139,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   ListView listView() {
     return ListView.builder(
-      scrollDirection: Axis.vertical,
+      physics: const NeverScrollableScrollPhysics(), //
+      // physics: const AlwaysScrollableScrollPhysics(),
+      // scrollDirection: Axis.vertical,
+
       shrinkWrap: true,
       itemCount: todos.length,
       itemBuilder: (context, index) => Card(
@@ -150,7 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             title: Text(
               todos[index].details,
-              // ignore: prefer_const_constructors
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -164,7 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
-                    removeTodo(index);
+                    tempIndex = index;
+                    _fn.requestFocus();
+                    _tc.text = todos[index].details;
+                    setState(() {});
                   },
                 ),
                 IconButton(
