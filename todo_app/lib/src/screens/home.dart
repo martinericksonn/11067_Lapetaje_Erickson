@@ -1,11 +1,9 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:todo_app/src/classes/todo.dart';
-import 'package:todo_app/src/widgets/card.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
-
+import 'package:todo_app/src/screens/task_form.dart';
 import '../widgets/active_todo.dart';
 import '../widgets/finished_todo.dart';
 
@@ -88,43 +86,40 @@ class _HomeScreenState extends State<HomeScreen> {
               ButtonsTabBar(
                 labelStyle: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontSize: 18,
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 unselectedLabelStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.secondary,
                 ),
-                // height: 50,
+
                 radius: 50,
                 contentPadding: EdgeInsets.fromLTRB(50, 12, 50, 12),
-                // buttonMargin: EdgeInsets.all(1),
+
                 unselectedBackgroundColor:
                     Theme.of(context).colorScheme.primary,
+
                 // ignore: prefer_const_literals_to_create_immutables
                 tabs: [
-                  Tab(
-                    text: "Todo",
-                  ),
-                  Tab(
-                    text: "Done",
-                  )
+                  const Tab(text: "Todo"),
+                  const Tab(text: "Done"),
                 ],
               ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: TabBarView(children: [
-                    ActiveList(
-                        primaryTodo: activeTodos,
-                        secondaryTodo: finishedTodos,
-                        task: markAsDone),
-                    FinishedTodos(
-                        primaryTodo: finishedTodos,
-                        secondaryTodo: activeTodos,
-                        task: markAsUndone),
-                    // Tasks(todoListActive: ActiveList(activeTodos: activeTodos,finishedTodos: finishedTodos,index: index),),
-                  ]),
+                  child: TabBarView(
+                    children: [
+                      ActiveList(
+                          primaryTodo: activeTodos,
+                          secondaryTodo: finishedTodos,
+                          task: markAsDone),
+                      FinishedTodos(
+                          primaryTodo: finishedTodos,
+                          secondaryTodo: activeTodos,
+                          task: markAsUndone),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -132,7 +127,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () => {
+            showModalBottomSheet(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                context: context,
+                builder: (_) {
+                  return TaskForm();
+                })
+          },
           label: Text(
             "Add Task",
             style: TextStyle(letterSpacing: .5, fontWeight: FontWeight.bold),
@@ -142,81 +149,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  // SafeArea appBody() {
-  //   return SafeArea(
-  //     child: Padding(
-  //       padding: const EdgeInsets.all(12.0),
-  //       child: Column(
-  //         children: [
-  //           Expanded(
-  //             child: SingleChildScrollView(
-  //               controller: _sc,
-  //               child: Tasks(),
-  //             ),
-  //           ),
-  //           SizedBox(
-  //             height: 10,
-  //           ),
-  //           // textField()
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // TextFormField textField() {
-  //   return TextFormField(
-  //     controller: _tc,
-  //     focusNode: _fn,
-  //     maxLines: 2,
-  //     decoration: InputDecoration(
-  //       focusedBorder: const OutlineInputBorder(),
-  //       enabledBorder: const OutlineInputBorder(),
-  //       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  //       prefix: IconButton(
-  //         icon: const Icon(Icons.clear, color: Colors.black),
-  //         onPressed: () {
-  //           tempIndex = null;
-  //           _tc.text = '';
-  //           _fn.unfocus();
-  //         },
-  //       ),
-  //       suffix: IconButton(
-  //         icon: const Icon(Icons.done, color: Colors.black),
-  //         onPressed: () {
-  //           setState(() {
-  //             tempIndex == null
-  //                 ? addTodo(_tc.text)
-  //                 : todos[tempIndex ?? 0].details = _tc.text;
-  //           });
-  //           tempIndex = null;
-  //           _tc.text = '';
-  //           _fn.unfocus();
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // addTodo(String details) {
-  //   int index = 1;
-  //   if (todos.isEmpty) {
-  //     index = 1;
-  //   } else {
-  //     index = todos.last.id + 1;
-  //   }
-
-  //   if (mounted) {
-  //     setState(() {
-  //       todos.add(Todo(details: details, id: index));
-  //     });
-  //   }
-  // }
-
-  // removeTodo(int index) {
-  //   setState(() {
-  //     todos.removeAt(index);
-  //   });
-  // }
 }

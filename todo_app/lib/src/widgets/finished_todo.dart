@@ -5,19 +5,6 @@ import 'package:flutter/material.dart';
 import '../classes/todo.dart';
 
 class FinishedTodos extends StatelessWidget {
-  // FinishedTodos({
-  //   Key? key,
-  //   required this.finishedTodos,
-  //   required this.activeTodos,
-  //   required this.index,
-  //   required this.markAsUndone,
-  // }) : super(key: key);
-
-  // List<Todo> activeTodos;
-  // List<Todo> finishedTodos;
-  // int index;
-
-  // Function markAsUndone;
   @override
   Widget build(BuildContext context) {
     return activeTask();
@@ -33,13 +20,6 @@ class FinishedTodos extends StatelessWidget {
   List<Todo> primaryTodo;
   List<Todo> secondaryTodo;
   Function task;
-  // ActiveList? todoListActive;
-
-  // List<Todo> activeTodos;
-  // List<Todo> finishedTodos;
-  // int index;
-
-  // Function markAsDone;
 
   ListView activeTask() {
     return ListView.builder(
@@ -52,12 +32,6 @@ class FinishedTodos extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(color: Colors.black),
         ),
-        // child: todoList(
-        //   activeTodos: primaryTodo,
-        //   finishedTodos: secondaryTodo,
-        //   markAsDone: task,
-        //   index: index,
-        // ),
         child: IntrinsicHeight(
           child: Row(
             children: [
