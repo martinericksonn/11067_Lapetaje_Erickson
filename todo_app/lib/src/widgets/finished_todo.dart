@@ -23,7 +23,7 @@ class FinishedTodos extends StatelessWidget {
 
   ListView activeTask() {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(), //
+      physics: const AlwaysScrollableScrollPhysics(), //
       shrinkWrap: true,
       itemCount: primaryTodo.length,
       itemBuilder: (context, index) => Card(

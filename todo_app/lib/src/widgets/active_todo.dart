@@ -14,27 +14,29 @@ class ActiveList extends StatelessWidget {
   //   required this.markAsDone,
   // }) : super(key: key);
 
-  ActiveList({
-    Key? key,
-    required this.primaryTodo,
-    required this.secondaryTodo,
-    required this.task,
-  }) : super(key: key);
+  ActiveList(
+      {Key? key,
+      required this.primaryTodo,
+      required this.secondaryTodo,
+      required this.task,
+      required this.editTask})
+      : super(key: key);
 
   List<Todo> primaryTodo;
   List<Todo> secondaryTodo;
   Function task;
+  Function editTask;
   // ActiveList? todoListActive;
 
   // List<Todo> activeTodos;
   // List<Todo> finishedTodos;
   // int index;
-
+  //Project in Programming Langauges
   // Function markAsDone;
 
   ListView activeTask() {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(), //
+      physics: const AlwaysScrollableScrollPhysics(), //
       shrinkWrap: true,
       itemCount: primaryTodo.length,
       itemBuilder: (context, index) => Card(
@@ -79,8 +81,7 @@ class ActiveList extends StatelessWidget {
                                 width: 10,
                               ),
                               Text(
-                                DateFormat.yMMMEd()
-                                    .format(primaryTodo[index].created),
+                                primaryTodo[index].parsedDate,
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Theme.of(context)
@@ -105,7 +106,7 @@ class ActiveList extends StatelessWidget {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          // removeTodo(index);
+                          editTask(primaryTodo[index]);
                         },
                       ),
                       IconButton(

@@ -57,6 +57,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void addTask(List<Todo> todoList, String task) {
+    todoList.add(
+      Todo(details: task.trim()),
+    );
+  }
+
+  void editTask(Todo todo, String task) {
+    todo.updateDetails(task);
+  }
+
   final ScrollController _sc = ScrollController();
   // final TextEditingController _tc = TextEditingController();
   // final FocusNode _fn = FocusNode();
@@ -111,9 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TabBarView(
                     children: [
                       ActiveList(
-                          primaryTodo: activeTodos,
-                          secondaryTodo: finishedTodos,
-                          task: markAsDone),
+                        primaryTodo: activeTodos,
+                        secondaryTodo: finishedTodos,
+                        task: markAsDone,
+                        editTask: showEditTaskModal,
+                      ),
                       FinishedTodos(
                           primaryTodo: finishedTodos,
                           secondaryTodo: activeTodos,
@@ -127,19 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => {
-            showModalBottomSheet(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-                context: context,
-                builder: (_) {
-                  return TaskForm();
-                })
-          },
+          onPressed: () => {},
           label: Text(
             "Add Task",
             style: TextStyle(letterSpacing: .5, fontWeight: FontWeight.bold),
@@ -148,5 +148,55 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  showAddTaskModal() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (_) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: TaskForm(
+              // executeFunction: addTask,
+              // todos: activeTodos,
+              ),
+        );
+      },
+    );
+  }
+
+  showEditTaskModal(Todo todo) async {
+    Todo? task = await showModalBottomSheet<Todo>(
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (_) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: TaskForm(
+            currentTask: todo.details,
+            // executeFunction: addTask,
+            // todos: activeTodos,
+          ),
+        );
+      },
+    );
+    if (task != null) {
+      editTask(todo, task.details);
+    }
   }
 }
