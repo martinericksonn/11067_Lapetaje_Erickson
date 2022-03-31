@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:todo_app/src/Classes/todo.dart';
+// import 'package:intl/intl.dart';
+import 'package:todo_app/src/classes/todo.dart';
+import 'package:todo_app/src/widgets/card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,8 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final ScrollController _sc = ScrollController();
-  final TextEditingController _tc = TextEditingController();
-  final FocusNode _fn = FocusNode();
+  // final TextEditingController _tc = TextEditingController();
+  // final FocusNode _fn = FocusNode();
   int? tempIndex;
 
   @override
@@ -62,104 +63,52 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 controller: _sc,
-                child: listView(),
+                child: ActiveTasks(),
               ),
             ),
             SizedBox(
               height: 10,
             ),
-            textField()
+            // textField()
           ],
         ),
       ),
     );
   }
 
-  TextFormField textField() {
-    return TextFormField(
-      controller: _tc,
-      focusNode: _fn,
-      maxLines: 2,
-      decoration: InputDecoration(
-        focusedBorder: const OutlineInputBorder(),
-        enabledBorder: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        prefix: IconButton(
-          icon: const Icon(Icons.clear, color: Colors.black),
-          onPressed: () {
-            tempIndex = null;
-            _tc.text = '';
-            _fn.unfocus();
-          },
-        ),
-        suffix: IconButton(
-          icon: const Icon(Icons.done, color: Colors.black),
-          onPressed: () {
-            setState(() {
-              tempIndex == null
-                  ? addTodo(_tc.text)
-                  : todos[tempIndex ?? 0].details = _tc.text;
-            });
-            tempIndex = null;
-            _tc.text = '';
-            _fn.unfocus();
-          },
-        ),
-      ),
-    );
-  }
-
-  ListView listView() {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(), //
-      // physics: const AlwaysScrollableScrollPhysics(),
-      // scrollDirection: Axis.vertical,
-
-      shrinkWrap: true,
-      itemCount: todos.length,
-      itemBuilder: (context, index) => Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(color: Colors.black),
-        ),
-        child: ListTile(
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(todos[index].id.toString()),
-            ),
-            title: Text(
-              todos[index].details,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Text(
-              DateFormat.yMMMEd().format(todos[index].created),
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    tempIndex = index;
-                    _fn.requestFocus();
-                    _tc.text = todos[index].details;
-                    setState(() {});
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    removeTodo(index);
-                  },
-                ),
-              ],
-            )),
-      ),
-    );
-  }
+  // TextFormField textField() {
+  //   return TextFormField(
+  //     controller: _tc,
+  //     focusNode: _fn,
+  //     maxLines: 2,
+  //     decoration: InputDecoration(
+  //       focusedBorder: const OutlineInputBorder(),
+  //       enabledBorder: const OutlineInputBorder(),
+  //       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //       prefix: IconButton(
+  //         icon: const Icon(Icons.clear, color: Colors.black),
+  //         onPressed: () {
+  //           tempIndex = null;
+  //           _tc.text = '';
+  //           _fn.unfocus();
+  //         },
+  //       ),
+  //       suffix: IconButton(
+  //         icon: const Icon(Icons.done, color: Colors.black),
+  //         onPressed: () {
+  //           setState(() {
+  //             tempIndex == null
+  //                 ? addTodo(_tc.text)
+  //                 : todos[tempIndex ?? 0].details = _tc.text;
+  //           });
+  //           tempIndex = null;
+  //           _tc.text = '';
+  //           _fn.unfocus();
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 
   addTodo(String details) {
     int index = 1;

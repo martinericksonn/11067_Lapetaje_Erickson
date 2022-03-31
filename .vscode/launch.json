@@ -1,0 +1,68 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "door_combination_lock",
+            "cwd": "door_combination_lock",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "door_combination_lock (profile mode)",
+            "cwd": "door_combination_lock",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "door_combination_lock (release mode)",
+            "cwd": "door_combination_lock",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "the_great_adventure",
+            "cwd": "the_great_adventure",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "the_great_adventure (profile mode)",
+            "cwd": "the_great_adventure",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "the_great_adventure (release mode)",
+            "cwd": "the_great_adventure",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "todo_app",
+            "cwd": "todo_app",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "todo_app (profile mode)",
+            "cwd": "todo_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "todo_app (release mode)",
+            "cwd": "todo_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
