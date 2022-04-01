@@ -1,9 +1,12 @@
 // ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, avoid_unnecessary_containers
 
+//!! StatefulWrapper needed
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/src/classes/todo.dart';
 
-class TaskForm extends StatelessWidget {
+// ignore: must_be_immutable
+class TaskForm extends StatefulWidget {
   // TaskForm(
   //     {Key? key, required this.executeFunction, required this.todos, this.currentTask})
   //     : super(key: key);
@@ -14,16 +17,19 @@ class TaskForm extends StatelessWidget {
   Todo? todo;
   String? currentTask;
 
+  @override
+  State<TaskForm> createState() => _TaskFormState();
+}
+
+class _TaskFormState extends State<TaskForm> {
   final TextEditingController _textController = TextEditingController();
+
+  String? get currentTask => widget.currentTask;
 
   @override
   void initState() {
-    if (currentTask != null) {
-      _textController.text = currentTask as String;
-      print("INSIDE");
-    } else {
-      print("NOOOOOOOOOOOOOOT INSIDE");
-    }
+    if (currentTask != null) _textController.text = currentTask as String;
+    super.initState();
   }
 
   @override
@@ -37,7 +43,7 @@ class TaskForm extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child: Text(
-                  currentTask != null ? "Edit Task" : "New Task",
+                  widget.currentTask != null ? "Edit Task" : "New Task",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -47,9 +53,7 @@ class TaskForm extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: TextFormField(
-                  controller: currentTask != null
-                      ? TextEditingController(text: currentTask)
-                      : _textController,
+                  controller: _textController,
                   autofocus: true,
                   style: TextStyle(fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
@@ -72,7 +76,7 @@ class TaskForm extends StatelessWidget {
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 35, vertical: 12),
+                              horizontal: 30, vertical: 12),
                           child: Text(
                             "Cancel",
                             style: TextStyle(
@@ -85,17 +89,14 @@ class TaskForm extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          if (_textController.text.trim() == "") {
-                            return;
+                          if (_textController.text.trim() != "") {
+                            Navigator.of(context)
+                                .pop(Todo(details: _textController.text));
                           }
-                          Navigator.of(context)
-                              .pop(Todo(details: _textController.text));
-                          // executeFunction(todos, _textController.text);
-                          Navigator.of(context).pop();
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 35, vertical: 12),
+                              horizontal: 30, vertical: 12),
                           decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.secondary,
                               borderRadius: BorderRadius.circular(20)),

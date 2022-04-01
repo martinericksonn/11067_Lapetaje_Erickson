@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/src/classes/todo.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/task_form.dart';
+import '../classes/controllers/todo_controller.dart';
 import '../widgets/active_todo.dart';
 import '../widgets/finished_todo.dart';
 
@@ -15,61 +16,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Todo> activeTodos = [
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish ',
-    ),
-    Todo(
-      id: 2,
-      details:
-          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 3,
-      details:
-          'Modrateloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-  ];
-
-  List<Todo> finishedTodos = [
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish ',
-    ),
-  ];
-  void markAsDone(List<Todo> activeTodos, List<Todo> finishedTodos, int index) {
-    if (mounted) {
-      setState(() {
-        finishedTodos.add(activeTodos[index]);
-        activeTodos.removeAt(index);
-      });
-    }
-  }
-
-  void markAsUndone(
-      List<Todo> finishedTodos, List<Todo> activeTodos, int index) {
-    if (mounted) {
-      setState(() {
-        activeTodos.add(finishedTodos[index]);
-        finishedTodos.removeAt(index);
-      });
-    }
-  }
-
-  void addTask(List<Todo> todoList, String task) {
-    todoList.add(
-      Todo(details: task.trim()),
-    );
-  }
-
-  void editTask(Todo todo, String task) {
-    todo.updateDetails(task);
-  }
-
+  final TodoController _todoController = TodoController();
   final ScrollController _sc = ScrollController();
-  // final TextEditingController _tc = TextEditingController();
-  // final FocusNode _fn = FocusNode();
   int? tempIndex;
 
   @override
@@ -121,15 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TabBarView(
                     children: [
                       ActiveList(
-                        primaryTodo: activeTodos,
-                        secondaryTodo: finishedTodos,
-                        task: markAsDone,
+                        todoController: _todoController,
                         editTask: showEditTaskModal,
                       ),
                       FinishedTodos(
-                          primaryTodo: finishedTodos,
-                          secondaryTodo: activeTodos,
-                          task: markAsUndone),
+                        todoController: _todoController,
+                      ),
                     ],
                   ),
                 ),
@@ -139,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => {},
+          onPressed: () => {showAddTaskModal()},
           label: Text(
             "Add Task",
             style: TextStyle(letterSpacing: .5, fontWeight: FontWeight.bold),
@@ -150,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  showAddTaskModal() {
-    showModalBottomSheet(
+  showAddTaskModal() async {
+    Todo? task = await showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -164,13 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: TaskForm(
-              // executeFunction: addTask,
-              // todos: activeTodos,
-              ),
+          child: TaskForm(),
         );
       },
     );
+    if (task != null) {
+      _todoController.addTask(task.details);
+    }
   }
 
   showEditTaskModal(Todo todo) async {
@@ -189,14 +134,12 @@ class _HomeScreenState extends State<HomeScreen> {
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: TaskForm(
             currentTask: todo.details,
-            // executeFunction: addTask,
-            // todos: activeTodos,
           ),
         );
       },
     );
     if (task != null) {
-      editTask(todo, task.details);
+      _todoController.updateTask(todo, task.details);
     }
   }
 }

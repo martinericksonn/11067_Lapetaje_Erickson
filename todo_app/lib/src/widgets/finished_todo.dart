@@ -2,30 +2,31 @@
 
 import 'package:flutter/material.dart';
 
-import '../classes/todo.dart';
+import '../classes/controllers/todo_controller.dart';
 
 class FinishedTodos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return activeTask();
+    return AnimatedBuilder(
+        animation: todoController,
+        builder: (context, Widget? w) {
+          return activeTask();
+        });
   }
 
   FinishedTodos({
     Key? key,
-    required this.primaryTodo,
-    required this.secondaryTodo,
-    required this.task,
+    // required this.primaryTodo,
+    // required this.secondaryTodo,
+    required this.todoController,
   }) : super(key: key);
-
-  List<Todo> primaryTodo;
-  List<Todo> secondaryTodo;
-  Function task;
+  TodoController todoController;
 
   ListView activeTask() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(), //
       shrinkWrap: true,
-      itemCount: primaryTodo.length,
+      itemCount: todoController.finishedTask.length,
       itemBuilder: (context, index) => Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -45,7 +46,7 @@ class FinishedTodos extends StatelessWidget {
                         constraints: BoxConstraints(minHeight: 40),
                         // color: Colors.pink,
                         child: Text(
-                          primaryTodo[index].details,
+                          todoController.finishedTask[index].details,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -62,7 +63,8 @@ class FinishedTodos extends StatelessWidget {
                     Icons.check_circle_rounded,
                     color: Colors.black,
                   ),
-                  onPressed: () => task(primaryTodo, secondaryTodo, index),
+                  onPressed: () => todoController
+                      .toggleUndone(todoController.finishedTask[index]),
                 ),
               ),
             ],
