@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TodoController _todoController = TodoController();
-  final ScrollController _sc = ScrollController();
+
   int? tempIndex;
 
   @override

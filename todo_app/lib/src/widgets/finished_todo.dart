@@ -4,29 +4,53 @@ import 'package:flutter/material.dart';
 
 import '../classes/controllers/todo_controller.dart';
 
-class FinishedTodos extends StatelessWidget {
+class FinishedTodos extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: todoController,
-        builder: (context, Widget? w) {
-          return activeTask();
-        });
-  }
+  State<FinishedTodos> createState() => _FinishedTodosState();
 
   FinishedTodos({
     Key? key,
-    // required this.primaryTodo,
-    // required this.secondaryTodo,
     required this.todoController,
   }) : super(key: key);
   TodoController todoController;
+}
+
+class _FinishedTodosState extends State<FinishedTodos> {
+  @override
+  Widget build(BuildContext context) {
+    return widget.todoController.finishedTask.isNotEmpty
+        ? AnimatedBuilder(
+            animation: widget.todoController,
+            builder: (context, Widget? w) {
+              return activeTask();
+            })
+        : emptyDone();
+  }
+
+  Widget emptyDone() {
+    return Center(
+      child: Column(
+        children: const [
+          SizedBox(
+            height: 30,
+          ),
+          Image(
+            image: AssetImage('assets/images/emptyDone.png'),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text("No currently done task")
+        ],
+      ),
+    );
+  }
 
   ListView activeTask() {
     return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(), //
       shrinkWrap: true,
-      itemCount: todoController.finishedTask.length,
+      itemCount: widget.todoController.finishedTask.length,
       itemBuilder: (context, index) => Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -46,7 +70,7 @@ class FinishedTodos extends StatelessWidget {
                         constraints: BoxConstraints(minHeight: 40),
                         // color: Colors.pink,
                         child: Text(
-                          todoController.finishedTask[index].details,
+                          widget.todoController.finishedTask[index].details,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
@@ -59,13 +83,14 @@ class FinishedTodos extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: IconButton(
-                  icon: Icon(
-                    Icons.check_circle_rounded,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => todoController
-                      .toggleUndone(todoController.finishedTask[index]),
-                ),
+                    icon: Icon(
+                      Icons.check_circle_rounded,
+                      color: Colors.black,
+                    ),
+                    onPressed: () => setState(() {
+                          widget.todoController.toggleUndone(
+                              widget.todoController.finishedTask[index]);
+                        })),
               ),
             ],
           ),
