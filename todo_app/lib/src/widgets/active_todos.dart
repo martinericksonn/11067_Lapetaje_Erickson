@@ -144,10 +144,9 @@ class _ActiveListState extends State<ActiveList> {
             ),
             onTap: (selected) {
               setState(() {
-                Timer(Duration(milliseconds: 1000), () {
-                  widget.todoController
-                      .toggleDone(widget.todoController.activeTask[index]);
-                });
+                widget.todoController
+                    .toggleDone(widget.todoController.activeTask[index]);
+                // Timer(Duration(milliseconds: 1000), () {});
               });
             },
           ),

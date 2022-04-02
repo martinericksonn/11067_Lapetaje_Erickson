@@ -1,51 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/src/classes/todo.dart';
+import 'package:todo_app/src/classes/todo_model.dart';
 
 class TodoController with ChangeNotifier {
-  List<Todo> activeTask = [
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish ',
-    ),
-    Todo(
-      id: 2,
-      details:
-          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 3,
-      details:
-          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish ',
-    ),
-    Todo(
-      id: 2,
-      details:
-          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 3,
-      details:
-          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 1,
-      details: 'Walk the goldfish ',
-    ),
-    Todo(
-      id: 2,
-      details:
-          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-    Todo(
-      id: 3,
-      details:
-          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    ),
-  ];
+  List<Todo> activeTask = [];
   List<Todo> finishedTask = [
     // Todo(
     //   id: 1,

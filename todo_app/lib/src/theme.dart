@@ -10,7 +10,11 @@ ThemeData appTheme() {
       selectionHandleColor: Colors.black,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      errorStyle: TextStyle(color: Colors.black45),
       labelStyle: TextStyle(color: Colors.black45),
+      focusedErrorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+      ),
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.black),
       ),
