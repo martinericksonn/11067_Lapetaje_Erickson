@@ -19,6 +19,12 @@ dependencies:
   roundcheckbox: ^2.0.4+1
   flutter_launcher_icons: ^0.9.2
 
+flutter_icons:
+  image_path: "assets/icon/todo_logo.png"
+  #   android: "launcher_icon"
+  ios: true
+  android: true
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
