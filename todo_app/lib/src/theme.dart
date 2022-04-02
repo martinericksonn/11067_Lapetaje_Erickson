@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Colors.black,
+      selectionColor: Colors.black45,
+      selectionHandleColor: Colors.black,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(color: Colors.black45),
       enabledBorder: UnderlineInputBorder(

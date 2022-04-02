@@ -53,6 +53,7 @@ class _TaskFormState extends State<TaskForm> {
               Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: TextFormField(
+                  textCapitalization: TextCapitalization.sentences,
                   controller: _textController,
                   autofocus: true,
                   style: TextStyle(fontWeight: FontWeight.bold),

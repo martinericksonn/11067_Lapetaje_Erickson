@@ -5,8 +5,8 @@ import 'package:todo_app/src/classes/todo.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/task_form.dart';
 import '../classes/controllers/todo_controller.dart';
-import '../widgets/active_todo.dart';
-import '../widgets/finished_todo.dart';
+import '../widgets/active_todos.dart';
+import '../widgets/finished_todos.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               ButtonsTabBar(
                 labelStyle: TextStyle(
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -59,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // ignore: prefer_const_literals_to_create_immutables
                 tabs: [
-                  const Tab(text: "Todo"),
+                  const Tab(
+                    text: "Todo",
+                  ),
                   const Tab(text: "Done"),
                 ],
               ),
@@ -90,7 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
           onPressed: () => {showAddTaskModal()},
           label: Text(
             "Add Task",
-            style: TextStyle(letterSpacing: .5, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              letterSpacing: .5,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+            ),
           ),
           icon: Icon(Icons.add_box_rounded),
         ),

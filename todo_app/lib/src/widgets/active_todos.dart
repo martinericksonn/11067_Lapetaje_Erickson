@@ -47,7 +47,7 @@ class _ActiveListState extends State<ActiveList> {
     );
   }
 
-  Widget deleteBkg() {
+  Widget deleteBkg(int index) {
     return Row(
       children: [
         Expanded(
@@ -89,7 +89,7 @@ class _ActiveListState extends State<ActiveList> {
                       widget.todoController.activeTask[index]);
                 });
               },
-              background: deleteBkg(),
+              background: deleteBkg(index),
               direction: DismissDirection.startToEnd,
               child: Card(
                   elevation: 0,
