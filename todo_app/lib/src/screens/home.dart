@@ -64,19 +64,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: TabBarView(
-                    children: [
-                      ActiveList(
+                child: TabBarView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ActiveList(
                         todoController: _todoController,
                         editTask: showEditTaskModal,
                       ),
-                      FinishedTodos(
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: FinishedTodos(
                         todoController: _todoController,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             ],

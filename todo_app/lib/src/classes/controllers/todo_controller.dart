@@ -7,16 +7,44 @@ class TodoController with ChangeNotifier {
       id: 1,
       details: 'Walk the goldfish ',
     ),
-    // Todo(
-    //   id: 2,
-    //   details:
-    //       'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    // ),
-    // Todo(
-    //   id: 3,
-    //   details:
-    //       'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
-    // ),
+    Todo(
+      id: 2,
+      details:
+          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
+    Todo(
+      id: 3,
+      details:
+          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
+    Todo(
+      id: 1,
+      details: 'Walk the goldfish ',
+    ),
+    Todo(
+      id: 2,
+      details:
+          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
+    Todo(
+      id: 3,
+      details:
+          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
+    Todo(
+      id: 1,
+      details: 'Walk the goldfish ',
+    ),
+    Todo(
+      id: 2,
+      details:
+          'Extra looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
+    Todo(
+      id: 3,
+      details:
+          'Moderate loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong task',
+    ),
   ];
   List<Todo> finishedTask = [
     // Todo(
@@ -49,18 +77,13 @@ class TodoController with ChangeNotifier {
     notifyListeners();
   }
 
-  // addTodo(Todo todo) {
-  //   data.add(todo);
-  //   notifyListeners();
-  // }
+  void deleteActiveTask(Todo task) {
+    activeTask.remove(task);
+    notifyListeners();
+  }
 
-  // removeTodo(Todo toBeDeleted) {
-  //   data.remove(toBeDeleted);
-  //   notifyListeners();
-  // }
-
-  // updateTodo(Todo todo, String newDetails) {
-  //   todo.updateDetails(newDetails);
-  //   notifyListeners();
-  // }
+  void deleteFinishedTask(Todo task) {
+    finishedTask.remove(task);
+    notifyListeners();
+  }
 }
