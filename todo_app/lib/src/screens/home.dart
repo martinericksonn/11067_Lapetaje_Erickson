@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:todo_app/src/classes/todo_model.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/form.dart';
@@ -17,16 +18,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TodoController _todoController = TodoController();
+  bool cameraAccess = false;
+  // @override
+  // void initState() {
+  //   _todoController.addListener(newToDoListener);
+  //   super.initState();
 
-  @override
-  void initState() {
-    _todoController.addListener(newToDoListener);
-    super.initState();
-  }
-
-  newToDoListener() {
-    print("Updated listener");
-  }
+  //   showAlert(context);
+  // }
 
   int? tempIndex;
 
@@ -39,14 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Theme.of(context).primaryColor,
         body: appBody(context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: appFloatingButton(),
+        floatingActionButton: appFloatingButton(context),
       ),
     );
   }
 
-  FloatingActionButton appFloatingButton() {
+  FloatingActionButton appFloatingButton(context) {
     return FloatingActionButton.extended(
-      onPressed: () => {showAddTaskModal()},
+      onPressed: () => {showAddTaskModal(context)},
       label: Text(
         "Add Task",
         style: TextStyle(
@@ -122,7 +121,67 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  showAddTaskModal() async {
+  showAlert(BuildContext context) async {
+    cameraAccess
+        ? null
+        : showPlatformDialog(
+            context: context,
+            builder: (context) => BasicDialogAlert(
+              title: Row(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.blue,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: RichText(
+                        text: TextSpan(
+                            text: 'Allow ',
+                            style: TextStyle(color: Colors.black),
+                            children: const <TextSpan>[
+                          TextSpan(
+                              text: "Todo",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                          TextSpan(
+                              text: ' to take pictures and record videos?'),
+                        ])),
+                  ),
+                ],
+              ),
+              actions: <Widget>[
+                BasicDialogAction(
+                    title: Text(
+                      "DENY",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    onPressed: null),
+                BasicDialogAction(
+                  title: Text(
+                    "ALLOW",
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+    cameraAccess = true;
+  }
+
+  showAddTaskModal(context) async {
+    showAlert(context);
     Todo? task = await showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
