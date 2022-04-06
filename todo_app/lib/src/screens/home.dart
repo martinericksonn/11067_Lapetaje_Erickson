@@ -18,6 +18,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TodoController _todoController = TodoController();
 
+  @override
+  void initState() {
+    _todoController.addListener(newToDoListener);
+    super.initState();
+  }
+
+  newToDoListener() {
+    print("Updated listener");
+  }
+
   int? tempIndex;
 
   @override
@@ -52,26 +62,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Center appBody(BuildContext context) {
     return Center(
       child: Column(children: [
-        ButtonsTabBar(
-          labelStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-          unselectedLabelStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-          radius: 50,
-          contentPadding: EdgeInsets.fromLTRB(50, 12, 50, 12),
-          unselectedBackgroundColor: Theme.of(context).colorScheme.primary,
-          // ignore: prefer_const_literals_to_create_immutables
-          tabs: [
-            const Tab(
-              text: "Todo",
+        SizedBox(
+          height: 52,
+          child: ButtonsTabBar(
+            labelStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            const Tab(text: "Done"),
-          ],
+            unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            radius: 50,
+            contentPadding: EdgeInsets.fromLTRB(50, 12, 50, 12),
+            unselectedBackgroundColor: Theme.of(context).colorScheme.primary,
+            // ignore: prefer_const_literals_to_create_immutables
+            tabs: [
+              const Tab(
+                text: "Todo",
+              ),
+              const Tab(text: "Done"),
+            ],
+          ),
         ),
         Expanded(
           child: TabBarView(children: [
