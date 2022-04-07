@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+    primaryTextTheme: Typography().black,
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: Colors.black,
       selectionColor: Colors.black45,

@@ -31,15 +31,13 @@ class _FinishedTodosState extends State<FinishedTodos> {
   Widget emptyDone() {
     return Center(
       child: Column(
-        children: const [
-          SizedBox(
-            height: 30,
-          ),
-          Image(
-            image: AssetImage('assets/images/emptyDone.png'),
-          ),
-          SizedBox(
-            height: 10,
+        children: [
+          Container(
+            padding: EdgeInsets.all(30),
+            height: 350,
+            child: Image(
+              image: AssetImage('assets/images/emptyDone.png'),
+            ),
           ),
           Text("No completed task")
         ],
