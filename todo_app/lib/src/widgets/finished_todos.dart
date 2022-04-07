@@ -34,7 +34,7 @@ class _FinishedTodosState extends State<FinishedTodos> {
         children: [
           Container(
             padding: EdgeInsets.all(30),
-            height: 350,
+            height: 320,
             child: Image(
               image: AssetImage('assets/images/emptyDone.png'),
             ),

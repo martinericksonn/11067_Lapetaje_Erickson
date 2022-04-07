@@ -10,6 +10,7 @@ ThemeData appTheme() {
       selectionHandleColor: Colors.black,
     ),
     inputDecorationTheme: InputDecorationTheme(
+      hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
       errorStyle: TextStyle(color: Colors.black45),
       labelStyle: TextStyle(color: Colors.black45),
       focusedErrorBorder: UnderlineInputBorder(
