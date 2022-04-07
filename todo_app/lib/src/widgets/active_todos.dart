@@ -31,17 +31,15 @@ class _ActiveListState extends State<ActiveList> {
   Widget emptyTodo() {
     return Center(
       child: Column(
-        children: const [
-          SizedBox(
-            height: 30,
+        children: [
+          Container(
+            padding: EdgeInsets.all(30),
+            height: 350,
+            child: Image(
+              image: AssetImage('assets/images/emptyTodo.png'),
+            ),
           ),
-          Image(
-            image: AssetImage('assets/images/emptyTodo.png'),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text("Todo is Empty")
+          Text("Todo is empty")
         ],
       ),
     );
