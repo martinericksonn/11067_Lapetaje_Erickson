@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:todo_app/src/classes/todo_model.dart';
+import '../model/todo_model.dart';
 
 class TodoController with ChangeNotifier {
   final Box todoCache = Hive.box('todos');

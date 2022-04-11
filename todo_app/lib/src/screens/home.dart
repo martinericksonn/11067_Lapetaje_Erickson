@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
-import 'package:todo_app/src/classes/todo_model.dart';
+
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/form.dart';
 import '../classes/controllers/todo_controller.dart';
+import '../classes/model/todo_model.dart';
 import '../widgets/active_todos.dart';
 import '../widgets/finished_todos.dart';
 

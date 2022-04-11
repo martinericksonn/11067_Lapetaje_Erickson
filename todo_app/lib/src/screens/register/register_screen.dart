@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:todo_app/src/screens/register.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,53 +28,58 @@ class LoginScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.50,
         // color: Colors.pink,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            Column(
-              children: [
-                title(),
-                SizedBox(height: 20),
-                emailTextField(context),
-                passwordTextField(context),
-                forgetPassword(context),
-              ],
-            ),
-
-            Column(
-              children: [
-                loginButton(context),
-                registerButton(context),
-              ],
-            ),
-            // TextFormField(),
-          ],
+        height: MediaQuery.of(context).size.height * 0.55,
+        // color: Colors.pink,
+        child: Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              Column(
+                children: [
+                  title(),
+                  SizedBox(height: 20),
+                  usernameTextField(context),
+                  emailTextField(context),
+                  passwordTextField(context),
+                ],
+              ),
+              // Text(
+              //   "Invalid Email",
+              //   style: TextStyle(
+              //     color: Colors.red,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+              Column(
+                children: [
+                  registerButton(context),
+                  loginButton(context),
+                ],
+              ),
+              // TextFormField(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Row registerButton(BuildContext context) {
+  Row loginButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "New to Tasuku?",
+          "Joined us before?",
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         TextButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => RegisterScreen(),
-                ),
-              );
+              Navigator.of(context).pop();
             },
             child: Text(
-              "Register",
+              "Login",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
                 fontWeight: FontWeight.bold,
@@ -85,7 +89,7 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  TextButton loginButton(BuildContext context) {
+  TextButton registerButton(BuildContext context) {
     return TextButton(
       onPressed: () {},
       child: Container(
@@ -98,7 +102,7 @@ class LoginScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: Text(
-            "Login",
+            "Register",
             style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -130,7 +134,7 @@ class LoginScreen extends StatelessWidget {
       padding: EdgeInsets.only(left: 10),
       alignment: Alignment.topLeft,
       child: Text(
-        "Be productive.",
+        "Start your journey now.",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -169,6 +173,33 @@ class LoginScreen extends StatelessWidget {
         ));
   }
 
+  Container usernameTextField(BuildContext context) {
+    return Container(
+        margin: EdgeInsets.all(5),
+        padding: EdgeInsets.all(5),
+        decoration: BoxDecoration(
+            border: Border.all(
+              color:
+                  Theme.of(context).colorScheme.secondary, // set border color
+              width: 1.0,
+            ), // set
+            // color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(20)),
+        child: const TextField(
+          style: TextStyle(fontWeight: FontWeight.bold),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            hintText: "Username",
+            contentPadding:
+                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+          ),
+        ));
+  }
+
   Container emailTextField(BuildContext context) {
     return Container(
         margin: EdgeInsets.all(5),
@@ -176,6 +207,7 @@ class LoginScreen extends StatelessWidget {
         decoration: BoxDecoration(
             border: Border.all(
               color:
+                  // Colors.red,
                   Theme.of(context).colorScheme.secondary, // set border color
               width: 1.0,
             ), // set
@@ -212,9 +244,11 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       Container(
+        // color: Colors.pink,
+        height: 360,
         padding: EdgeInsets.only(top: 18.0),
         child: Image(
-          image: AssetImage("assets/images/login.png"),
+          image: AssetImage("assets/images/register.png"),
         ),
       )
     ]);

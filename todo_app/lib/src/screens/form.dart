@@ -1,7 +1,8 @@
 // ignore_for_file: override_on_non_overriding_member, prefer_const_constructors, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/src/classes/todo_model.dart';
+
+import '../classes/model/todo_model.dart';
 
 // ignore: must_be_immutable
 class TaskForm extends StatefulWidget {

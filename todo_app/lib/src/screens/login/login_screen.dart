@@ -1,8 +1,33 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:todo_app/src/screens/register/register_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+import '../../classes/controllers/auth_login_controller.dart';
+
+class LoginScreen extends StatefulWidget {
+  final AuthController auth;
+
+  const LoginScreen(
+    this.auth, {
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailCon = TextEditingController(),
+      _passCon = TextEditingController();
+  String prompts = '';
+  AuthController get _auth => widget.auth;
+
+  var emailBorderColor = Colors.black;
+  var emailBorderWidth = 1.0;
+
+  var passwordBorderColor = Colors.black;
+  var passwordBorderWidth = 1.0;
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +37,14 @@ class RegisterScreen extends StatelessWidget {
         // ignore: prefer_const_literals_to_create_immutables
         body: SingleChildScrollView(
           child: Center(
-            child: Column(
-              children: [
-                upperBody(context),
-                lowerBody(context),
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  upperBody(context),
+                  lowerBody(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -28,58 +56,59 @@ class RegisterScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.50,
         // color: Colors.pink,
-        height: MediaQuery.of(context).size.height * 0.55,
-        // color: Colors.pink,
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            // ignore: prefer_const_literals_to_create_immutables
-            children: [
-              Column(
-                children: [
-                  title(),
-                  SizedBox(height: 20),
-                  nicknameTextField(context),
-                  emailTextField(context),
-                  passwordTextField(context),
-                ],
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            Column(
+              children: [
+                title(),
+                SizedBox(height: 20),
+                emailTextField(context),
+                passwordTextField(context),
+                forgetPassword(context),
+              ],
+            ),
+            Text(
+              prompts,
+              style: TextStyle(
+                color: Colors.red,
               ),
-              // Text(
-              //   "Invalid Email",
-              //   style: TextStyle(
-              //     color: Colors.red,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
-              Column(
-                children: [
-                  registerButton(context),
-                  loginButton(context),
-                ],
-              ),
-              // TextFormField(),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            Column(
+              children: [
+                loginButton(context),
+                registerButton(context),
+              ],
+            ),
+            // TextFormField(),
+          ],
         ),
       ),
     );
   }
 
-  Row loginButton(BuildContext context) {
+  Row registerButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Joined us before?",
+          "New to Tasuku?",
           style: TextStyle(color: Theme.of(context).colorScheme.secondary),
         ),
         TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => RegisterScreen(),
+                ),
+              );
             },
             child: Text(
-              "Login",
+              "Register",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.secondary,
                 fontWeight: FontWeight.bold,
@@ -89,9 +118,20 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  TextButton registerButton(BuildContext context) {
+  TextButton loginButton(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          bool result = _auth.login(_emailCon.text, _passCon.text);
+          if (!result) {
+            setState(() {
+              prompts = prompts != ""
+                  ? prompts
+                  : 'Email or password may be incorrect or the user has not been registered yet.';
+            });
+          }
+        }
+      },
       child: Container(
         width: double.infinity,
         height: 60,
@@ -102,7 +142,7 @@ class RegisterScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(50)),
         child: Center(
           child: Text(
-            "Register",
+            "Login",
             style: TextStyle(
                 fontSize: 18,
                 color: Theme.of(context).colorScheme.primary,
@@ -134,7 +174,7 @@ class RegisterScreen extends StatelessWidget {
       padding: EdgeInsets.only(left: 10),
       alignment: Alignment.topLeft,
       child: Text(
-        "Start your journey now.",
+        "Be productive.",
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -149,16 +189,33 @@ class RegisterScreen extends StatelessWidget {
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             border: Border.all(
-              color:
-                  Theme.of(context).colorScheme.secondary, // set border color
-              width: 1.0,
+              color: passwordBorderColor,
+              width: passwordBorderWidth,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(20)),
-        child: TextField(
+        child: TextFormField(
+          controller: _passCon,
           obscureText: true,
           enableSuggestions: false,
           autocorrect: false,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              setState(() {
+                prompts = "Fields cannot be empty";
+                passwordBorderColor = Colors.red;
+                passwordBorderWidth = 2;
+              });
+              // return 'Please enter your Email';
+            } else {
+              setState(() {
+                prompts = "";
+                passwordBorderColor = Colors.black;
+                passwordBorderWidth = 1;
+              });
+            }
+            return null;
+          },
           style: TextStyle(fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -166,34 +223,8 @@ class RegisterScreen extends StatelessWidget {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
+            hintStyle: TextStyle(color: passwordBorderColor),
             hintText: "Password",
-            contentPadding:
-                EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-          ),
-        ));
-  }
-
-  Container nicknameTextField(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.all(5),
-        padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            border: Border.all(
-              color:
-                  Theme.of(context).colorScheme.secondary, // set border color
-              width: 1.0,
-            ), // set
-            // color: Theme.of(context).colorScheme.secondary,
-            borderRadius: BorderRadius.circular(20)),
-        child: const TextField(
-          style: TextStyle(fontWeight: FontWeight.bold),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            hintText: "Nickname",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
           ),
@@ -206,14 +237,30 @@ class RegisterScreen extends StatelessWidget {
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             border: Border.all(
-              color:
-                  // Colors.red,
-                  Theme.of(context).colorScheme.secondary, // set border color
-              width: 1.0,
+              color: emailBorderColor, // set border color
+              width: emailBorderWidth,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(20)),
-        child: const TextField(
+        child: TextFormField(
+          controller: _emailCon,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              setState(() {
+                prompts = "Fields cannot be empty";
+                emailBorderColor = Colors.red;
+                emailBorderWidth = 2;
+              });
+              // return 'Please enter your Email';
+            } else {
+              setState(() {
+                prompts = "";
+                emailBorderColor = Colors.black;
+                emailBorderWidth = 1;
+              });
+            }
+            return null;
+          },
           style: TextStyle(fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -221,6 +268,7 @@ class RegisterScreen extends StatelessWidget {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
+            hintStyle: TextStyle(color: emailBorderColor),
             hintText: "Email",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -244,11 +292,9 @@ class RegisterScreen extends StatelessWidget {
         ),
       ),
       Container(
-        // color: Colors.pink,
-        height: 360,
         padding: EdgeInsets.only(top: 18.0),
         child: Image(
-          image: AssetImage("assets/images/register.png"),
+          image: AssetImage("assets/images/login.png"),
         ),
       )
     ]);
