@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
 import '../classes/controllers/todo_controller.dart';

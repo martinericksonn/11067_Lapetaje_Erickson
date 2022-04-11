@@ -5,21 +5,24 @@ import 'package:flutter_dialogs/flutter_dialogs.dart';
 
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/form.dart';
+import '../classes/controllers/auth_login_controller.dart';
 import '../classes/controllers/todo_controller.dart';
 import '../classes/model/todo_model.dart';
 import '../widgets/active_todos.dart';
 import '../widgets/finished_todos.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final AuthController auth;
+  const HomeScreen(this.auth, {Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AuthController get _auth => widget.auth;
   final TodoController _todoController = TodoController();
-  bool cameraAccess = false;
+
   // @override
   // void initState() {
   //   _todoController.addListener(newToDoListener);
@@ -109,80 +112,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar appTitle(BuildContext context) {
     return AppBar(
-      title: Center(
+      title: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Text(
-          'Task Manager',
+          'Tasuku',
           style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.secondary),
         ),
       ),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+            onPressed: () {
+              print("logout");
+              _auth.logout();
+            },
+            icon: const Icon(Icons.logout),
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        )
+      ],
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
   }
 
-  showAlert(BuildContext context) async {
-    cameraAccess
-        ? null
-        : showPlatformDialog(
-            context: context,
-            builder: (context) => BasicDialogAlert(
-              title: Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.blue,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                  Flexible(
-                    child: RichText(
-                        text: TextSpan(
-                            text: 'Allow ',
-                            style: TextStyle(color: Colors.black),
-                            children: const <TextSpan>[
-                          TextSpan(
-                              text: "Todo",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          TextSpan(
-                              text: ' to take pictures and record videos?'),
-                        ])),
-                  ),
-                ],
-              ),
-              actions: <Widget>[
-                BasicDialogAction(
-                    title: Text(
-                      "DENY",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    onPressed: null),
-                BasicDialogAction(
-                  title: Text(
-                    "ALLOW",
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          );
-    cameraAccess = true;
-  }
-
   showAddTaskModal(context) async {
-    showAlert(context);
     Todo? task = await showModalBottomSheet(
       isScrollControlled: true,
       shape: RoundedRectangleBorder(

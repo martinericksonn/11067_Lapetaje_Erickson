@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:todo_app/src/screens/login/login_screen.dart';
 
+import 'package:todo_app/src/screens/home.dart';
+import 'package:todo_app/src/screens/login/login_screen.dart';
 import '../classes/controllers/auth_login_controller.dart';
 
 class Wrapper extends StatelessWidget {
@@ -14,7 +15,7 @@ class Wrapper extends StatelessWidget {
           if (_authController.currentUser == null) {
             return LoginScreen(_authController);
           } else {
-            return LoginScreen(_authController);
+            return HomeScreen(_authController);
           }
         });
   }

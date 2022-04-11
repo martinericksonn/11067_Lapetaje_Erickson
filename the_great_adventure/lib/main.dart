@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screen/safe_dial_screen.dart';
+
 import 'package:flutter_application_1/screen/welcome_screen.dart';
 
 void main() {

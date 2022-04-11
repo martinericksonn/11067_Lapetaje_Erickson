@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -7,7 +9,9 @@ class AuthController with ChangeNotifier {
   final Box accountsCache = Hive.box('accounts');
   User? currentUser;
   List<User> users = [];
+
   AuthController() {
+    print("currentUser $currentUser");
     List result = accountsCache.get('users', defaultValue: []);
     print(result);
     for (var entry in result) {
@@ -17,11 +21,11 @@ class AuthController with ChangeNotifier {
     notifyListeners();
   }
 
-  String register(String email, String password) {
+  String register(String username, String email, String password) {
     if (userExists(email) != null) {
       return 'Error: the email is already taken';
     } else {
-      users.add(User(email: email, password: password));
+      users.add(User(username: username, email: email, password: password));
       saveDataToCache();
       return "User Successfully registered";
     }
@@ -31,10 +35,12 @@ class AuthController with ChangeNotifier {
     User? userSearchResult = userExists(email);
     if (userSearchResult != null) {
       bool result = userSearchResult.login(email, password);
+      print("result $result");
       if (result) {
         currentUser = userSearchResult;
         notifyListeners();
       }
+      print("result $currentUser");
       return result;
     } else {
       return false;
@@ -61,5 +67,11 @@ class AuthController with ChangeNotifier {
     print(dataToStore);
     accountsCache.put('users', dataToStore);
     notifyListeners();
+  }
+
+  void printUser() {
+    for (var user in users) {
+      print(user);
+    }
   }
 }

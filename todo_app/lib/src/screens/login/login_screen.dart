@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:todo_app/src/screens/register/register_screen.dart';
 
@@ -20,14 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailCon = TextEditingController(),
       _passCon = TextEditingController();
-  String prompts = '';
+
   AuthController get _auth => widget.auth;
+  bool isEmailEmpty = false;
+  bool isPasswordEmpty = false;
 
-  var emailBorderColor = Colors.black;
-  var emailBorderWidth = 1.0;
-
-  var passwordBorderColor = Colors.black;
-  var passwordBorderWidth = 1.0;
+  String prompts = '';
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
             child: Form(
               key: _formKey,
-              child: Column(
-                children: [
-                  upperBody(context),
-                  lowerBody(context),
-                ],
-              ),
+              child: Column(children: [
+                upperBody(context),
+                lowerBody(context),
+              ]),
             ),
           ),
         ),
@@ -56,28 +52,24 @@ class _LoginScreenState extends State<LoginScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28.0),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.50,
+        height: MediaQuery.of(context).size.height * 0.52,
         // color: Colors.pink,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Column(
-              children: [
-                title(),
-                SizedBox(height: 20),
-                emailTextField(context),
-                passwordTextField(context),
-                forgetPassword(context),
-              ],
-            ),
-            Text(
-              prompts,
-              style: TextStyle(
-                color: Colors.red,
+            Container(
+              child: Column(
+                children: [
+                  title(),
+                  SizedBox(height: 20),
+                  emailTextField(context),
+                  passwordTextField(context),
+                  forgetPassword(context),
+                ],
               ),
-              textAlign: TextAlign.center,
             ),
+            promptMessage(),
             Column(
               children: [
                 loginButton(context),
@@ -91,30 +83,45 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Row registerButton(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "New to Tasuku?",
-          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+  Widget promptMessage() {
+    return Container(
+      child: Text(
+        prompts,
+        style: TextStyle(
+          color: Colors.red,
         ),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => RegisterScreen(),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  Widget registerButton(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.05,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "New to Tasuku?",
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => RegisterScreen(_auth),
+                  ),
+                );
+              },
+              child: Text(
+                "Register",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontWeight: FontWeight.bold,
                 ),
-              );
-            },
-            child: Text(
-              "Register",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontWeight: FontWeight.bold,
-              ),
-            )),
-      ],
+              )),
+        ],
+      ),
     );
   }
 
@@ -125,8 +132,8 @@ class _LoginScreenState extends State<LoginScreen> {
           bool result = _auth.login(_emailCon.text, _passCon.text);
           if (!result) {
             setState(() {
-              prompts = prompts != ""
-                  ? prompts
+              prompts = isEmailEmpty || isPasswordEmpty
+                  ? "Fields cannot be empty"
                   : 'Email or password may be incorrect or the user has not been registered yet.';
             });
           }
@@ -156,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Container forgetPassword(BuildContext context) {
     return Container(
-      alignment: Alignment.centerRight,
+      alignment: Alignment.topRight,
       child: TextButton(
         onPressed: () {},
         child: Text(
@@ -189,8 +196,10 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             border: Border.all(
-              color: passwordBorderColor,
-              width: passwordBorderWidth,
+              color: isPasswordEmpty
+                  ? Colors.red
+                  : Theme.of(context).colorScheme.secondary,
+              width: isPasswordEmpty ? 2.0 : 1.0,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(20)),
@@ -200,20 +209,10 @@ class _LoginScreenState extends State<LoginScreen> {
           enableSuggestions: false,
           autocorrect: false,
           validator: (value) {
-            if (value == null || value.isEmpty) {
-              setState(() {
-                prompts = "Fields cannot be empty";
-                passwordBorderColor = Colors.red;
-                passwordBorderWidth = 2;
-              });
-              // return 'Please enter your Email';
-            } else {
-              setState(() {
-                prompts = "";
-                passwordBorderColor = Colors.black;
-                passwordBorderWidth = 1;
-              });
-            }
+            setState(() {
+              isPasswordEmpty = (value == null || value.isEmpty) ? true : false;
+            });
+
             return null;
           },
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -223,7 +222,10 @@ class _LoginScreenState extends State<LoginScreen> {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            hintStyle: TextStyle(color: passwordBorderColor),
+            hintStyle: TextStyle(
+                color: isPasswordEmpty
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.secondary),
             hintText: "Password",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -237,28 +239,20 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
             border: Border.all(
-              color: emailBorderColor, // set border color
-              width: emailBorderWidth,
+              color: isEmailEmpty
+                  ? Colors.red
+                  : Theme.of(context).colorScheme.secondary,
+              width: isEmailEmpty ? 2.0 : 1.0,
             ), // set
             // color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(20)),
         child: TextFormField(
           controller: _emailCon,
           validator: (value) {
-            if (value == null || value.isEmpty) {
-              setState(() {
-                prompts = "Fields cannot be empty";
-                emailBorderColor = Colors.red;
-                emailBorderWidth = 2;
-              });
-              // return 'Please enter your Email';
-            } else {
-              setState(() {
-                prompts = "";
-                emailBorderColor = Colors.black;
-                emailBorderWidth = 1;
-              });
-            }
+            setState(() {
+              isEmailEmpty = (value == null || value.isEmpty) ? true : false;
+            });
+
             return null;
           },
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -268,7 +262,10 @@ class _LoginScreenState extends State<LoginScreen> {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            hintStyle: TextStyle(color: emailBorderColor),
+            hintStyle: TextStyle(
+                color: isEmailEmpty
+                    ? Colors.red
+                    : Theme.of(context).colorScheme.secondary),
             hintText: "Email",
             contentPadding:
                 EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
@@ -292,7 +289,9 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       Container(
+        alignment: Alignment.center,
         padding: EdgeInsets.only(top: 18.0),
+        height: MediaQuery.of(context).size.height * 0.43,
         child: Image(
           image: AssetImage("assets/images/login.png"),
         ),

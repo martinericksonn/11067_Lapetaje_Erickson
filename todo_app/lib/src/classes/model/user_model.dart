@@ -2,7 +2,7 @@ class User {
   late String username;
   late String password;
   late String email;
-  User({required this.email, required this.password});
+  User({required this.username, required this.email, required this.password});
 
   User.fromJson(Map<String, dynamic> json) {
     username = json['username'];
@@ -24,6 +24,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      'username':username,
       'email': email,
       'password': password,
     };
