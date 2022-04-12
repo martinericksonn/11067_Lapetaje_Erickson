@@ -2,4 +2,4 @@
 
 App GIF preview
 
-![output](../door_combination_lock.gif)
+![output](../output_gifs/door_combination_lock.gif)

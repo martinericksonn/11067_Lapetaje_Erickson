@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _todoController = TodoController(_auth.currentUser!.username);
+    _todoController = TodoController(_auth.currentUser);
     super.initState();
   }
 

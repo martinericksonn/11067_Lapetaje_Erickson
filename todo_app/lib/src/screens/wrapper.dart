@@ -12,7 +12,6 @@ class Wrapper extends StatelessWidget {
     return AnimatedBuilder(
         animation: _authController,
         builder: (context, Widget? w) {
-          print(_authController.currentUser == null);
           if (_authController.currentUser == null) {
             return LoginScreen(_authController);
           } else {

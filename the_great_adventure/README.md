@@ -2,4 +2,4 @@
 
 App GIF preview
 
-![output](../the_great_adventure.gif)
+![output](../output_gifs/the_great_adventure.gif)

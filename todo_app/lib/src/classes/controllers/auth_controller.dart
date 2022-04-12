@@ -5,14 +5,12 @@ import '../model/user_model.dart';
 
 class AuthController with ChangeNotifier {
   final Box accountsCache = Hive.box('accounts');
-  User? currentUser;
+  String? currentUser;
   List<User> users = [];
 
   AuthController() {
     List result = accountsCache.get('users', defaultValue: []);
-    var newCurrentUser =
-        accountsCache.get('currentUser', defaultValue: Map<String, dynamic>);
-    currentUser = User.fromJson(Map<String, dynamic>.from(newCurrentUser));
+    currentUser = accountsCache.get('currentUser', defaultValue: null);
 
     for (var entry in result) {
       users.add(User.fromJson(Map<String, dynamic>.from(entry)));
@@ -24,7 +22,8 @@ class AuthController with ChangeNotifier {
     if (userExists(email) != null) {
       return 'Error: the email is already taken';
     } else {
-      users.add(User(username: username, email: email, password: password));
+      users.add(User(
+          username: username, email: email.toLowerCase(), password: password));
       saveDataToCache();
       return "User Successfully registered";
     }
@@ -33,9 +32,9 @@ class AuthController with ChangeNotifier {
   bool login(String email, String password) {
     User? userSearchResult = userExists(email);
     if (userSearchResult != null) {
-      bool result = userSearchResult.login(email, password);
+      bool result = userSearchResult.login(email.toLowerCase(), password);
       if (result) {
-        currentUser = userSearchResult;
+        currentUser = userSearchResult.email;
 
         saveLoginToCache();
         notifyListeners();
@@ -71,7 +70,7 @@ class AuthController with ChangeNotifier {
   }
 
   saveLoginToCache() {
-    accountsCache.put('currentUser', currentUser?.toJson());
+    accountsCache.put('currentUser', currentUser);
     notifyListeners();
   }
 }

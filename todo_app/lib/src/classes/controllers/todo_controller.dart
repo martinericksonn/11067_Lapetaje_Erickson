@@ -5,7 +5,7 @@ import '../model/todo_model.dart';
 
 class TodoController with ChangeNotifier {
   final Box todoCache = Hive.box('todos');
-  late String currentUser;
+  late String? currentUser;
   List<Todo> activeTask = [];
   List<Todo> finishedTask = [];
 
