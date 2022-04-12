@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/form.dart';
-import '../classes/controllers/auth_login_controller.dart';
+import '../classes/controllers/auth_controller.dart';
 import '../classes/controllers/todo_controller.dart';
 import '../classes/model/todo_model.dart';
 import '../widgets/active_todos.dart';
@@ -123,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
             onPressed: () {
-              print("logout");
               _auth.logout();
             },
             icon: const Icon(Icons.logout),

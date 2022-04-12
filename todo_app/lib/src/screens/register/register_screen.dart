@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../classes/controllers/auth_login_controller.dart';
+import '../../classes/controllers/auth_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   final AuthController auth;

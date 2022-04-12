@@ -10,6 +10,9 @@ class AuthController with ChangeNotifier {
 
   AuthController() {
     List result = accountsCache.get('users', defaultValue: []);
+    var newCurrentUser =
+        accountsCache.get('currentUser', defaultValue: Map<String, dynamic>);
+    currentUser = User.fromJson(Map<String, dynamic>.from(newCurrentUser));
 
     for (var entry in result) {
       users.add(User.fromJson(Map<String, dynamic>.from(entry)));
@@ -33,9 +36,11 @@ class AuthController with ChangeNotifier {
       bool result = userSearchResult.login(email, password);
       if (result) {
         currentUser = userSearchResult;
+
+        saveLoginToCache();
         notifyListeners();
       }
-      // print("result $currentUser");
+
       return result;
     } else {
       return false;
@@ -44,6 +49,8 @@ class AuthController with ChangeNotifier {
 
   logout() {
     currentUser = null;
+    accountsCache.delete("currentUser");
+
     notifyListeners();
   }
 
@@ -60,6 +67,11 @@ class AuthController with ChangeNotifier {
       dataToStore.add(user.toJson());
     }
     accountsCache.put('users', dataToStore);
+    notifyListeners();
+  }
+
+  saveLoginToCache() {
+    accountsCache.put('currentUser', currentUser?.toJson());
     notifyListeners();
   }
 }
