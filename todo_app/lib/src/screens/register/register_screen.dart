@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -34,16 +33,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         // appBar: appBar(context),
         // ignore: prefer_const_literals_to_create_immutables
         body: SingleChildScrollView(
+          reverse: true,
           child: Center(
             child: Form(
+              onChanged: () => setState(() {
+                prompts = "";
+              }),
               key: _formKey,
               child: Column(
                 children: [
                   upperBody(context),
                   lowerBody(context),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                  )
                 ],
               ),
             ),
@@ -131,6 +139,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextButton registerButton(BuildContext context) {
     return TextButton(
       onPressed: () {
+        // print(_unCon.text);
+        // print(_emailCon.text);
+        // print(_passCon.text);
         // print(_formKey.currentState!.validate() && isFieldEmpty());
         if (_formKey.currentState!.validate() && isFieldEmpty()) {
           setState(() {

@@ -11,7 +11,7 @@ class User {
   }
 
   bool exists(String _email) {
-    return _email == _email;
+    return email == _email;
   }
 
   bool login(String _email, String _password) {
@@ -24,7 +24,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
-      'username':username,
+      'username': username,
       'email': email,
       'password': password,
     };

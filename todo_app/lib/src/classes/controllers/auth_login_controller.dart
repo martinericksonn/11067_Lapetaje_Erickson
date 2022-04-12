@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -11,11 +9,9 @@ class AuthController with ChangeNotifier {
   List<User> users = [];
 
   AuthController() {
-    print("currentUser $currentUser");
     List result = accountsCache.get('users', defaultValue: []);
-    print(result);
+
     for (var entry in result) {
-      print(entry);
       users.add(User.fromJson(Map<String, dynamic>.from(entry)));
     }
     notifyListeners();
@@ -35,12 +31,11 @@ class AuthController with ChangeNotifier {
     User? userSearchResult = userExists(email);
     if (userSearchResult != null) {
       bool result = userSearchResult.login(email, password);
-      print("result $result");
       if (result) {
         currentUser = userSearchResult;
         notifyListeners();
       }
-      print("result $currentUser");
+      // print("result $currentUser");
       return result;
     } else {
       return false;
@@ -64,14 +59,7 @@ class AuthController with ChangeNotifier {
     for (User user in users) {
       dataToStore.add(user.toJson());
     }
-    print(dataToStore);
     accountsCache.put('users', dataToStore);
     notifyListeners();
-  }
-
-  void printUser() {
-    for (var user in users) {
-      print(user);
-    }
   }
 }

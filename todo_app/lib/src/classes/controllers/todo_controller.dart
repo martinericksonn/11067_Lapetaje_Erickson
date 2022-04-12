@@ -5,13 +5,15 @@ import '../model/todo_model.dart';
 
 class TodoController with ChangeNotifier {
   final Box todoCache = Hive.box('todos');
+  late String currentUser;
   List<Todo> activeTask = [];
   List<Todo> finishedTask = [];
 
-  TodoController() {
-    List result = todoCache.get('todos', defaultValue: []);
-
+  TodoController(this.currentUser) {
+    List result = todoCache.get(currentUser, defaultValue: []);
+    print(currentUser);
     for (var entry in result) {
+      print(entry);
       if (!entry['done']) {
         activeTask.add(Todo.fromJson(Map<String, dynamic>.from(entry)));
       } else {
@@ -36,6 +38,8 @@ class TodoController with ChangeNotifier {
   }
 
   void addTask(String task) {
+    print("current Useeeeeeeeeeeeeeeeeeeeeeeer $currentUser");
+
     activeTask.add(
       Todo(details: task.trim()),
     );
@@ -66,7 +70,7 @@ class TodoController with ChangeNotifier {
       dataToStore.add(todo.toJson());
     }
 
-    todoCache.put('todos', dataToStore);
+    todoCache.put(currentUser, dataToStore);
     notifyListeners();
   }
 }

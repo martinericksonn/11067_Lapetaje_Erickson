@@ -31,15 +31,25 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false, // this is new
+
         // appBar: appBar(context),
         // ignore: prefer_const_literals_to_create_immutables
         body: SingleChildScrollView(
+          reverse: true,
           child: Center(
             child: Form(
               key: _formKey,
+              onChanged: () => setState(() {
+                prompts = "";
+              }),
               child: Column(children: [
                 upperBody(context),
                 lowerBody(context),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                )
               ]),
             ),
           ),
@@ -58,16 +68,14 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            Container(
-              child: Column(
-                children: [
-                  title(),
-                  SizedBox(height: 20),
-                  emailTextField(context),
-                  passwordTextField(context),
-                  forgetPassword(context),
-                ],
-              ),
+            Column(
+              children: [
+                title(),
+                SizedBox(height: 20),
+                emailTextField(context),
+                passwordTextField(context),
+                forgetPassword(context),
+              ],
             ),
             promptMessage(),
             Column(
@@ -84,14 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget promptMessage() {
-    return Container(
-      child: Text(
-        prompts,
-        style: TextStyle(
-          color: Colors.red,
-        ),
-        textAlign: TextAlign.center,
+    return Text(
+      prompts,
+      style: TextStyle(
+        color: Colors.red,
       ),
+      textAlign: TextAlign.center,
     );
   }
 
@@ -297,6 +303,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       )
     ]);
+  }
+
+  void clearPrompt() {
+    prompts = "";
   }
 
   AppBar appBar(BuildContext context) {

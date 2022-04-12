@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dialogs/flutter_dialogs.dart';
 
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:todo_app/src/screens/form.dart';
@@ -21,15 +20,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   AuthController get _auth => widget.auth;
-  final TodoController _todoController = TodoController();
+  late TodoController _todoController;
 
-  // @override
-  // void initState() {
-  //   _todoController.addListener(newToDoListener);
-  //   super.initState();
-
-  //   showAlert(context);
-  // }
+  @override
+  void initState() {
+    _todoController = TodoController(_auth.currentUser!.username);
+    super.initState();
+  }
 
   int? tempIndex;
 
