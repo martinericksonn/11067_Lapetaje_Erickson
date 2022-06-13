@@ -1,4 +1,5 @@
-# Project Output
+# Project Output  
+Download APK: https://github.com/martinericksonn/11067_Lapetaje_Erickson/releases/tag/v0.0.2-beta
 
 |           Door Combination Lock            |           The Great Adventure            |
 | :----------------------------------------: | :--------------------------------------: |
